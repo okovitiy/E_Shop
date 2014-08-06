@@ -1,0 +1,111 @@
+<%@ page import="ua.nure.okovitiy.SummaryTask4.db.Role"%>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf"%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf"%>
+<%@ taglib prefix="u" uri="/WEB-INF/user.tld" %>
+
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li>
+					<c:choose>
+						<c:when test="${userRole.name == 'admin' }">
+							<%-- <a class="navbar-brand" href="controller?command=listOrders">
+								<fmt:message key="header_jspf.anchor.home" />
+							</a> --%>						
+							<a class="navbar-brand" href="controller?command=listOrders"> 
+								<fmt:message key="header_jspf.anchor.all_orders" />
+							</a>
+							<a class="navbar-brand" href="controller?command=viewProducts"> 
+								<fmt:message key="header_jspf.anchor.products" />
+							</a>
+							<a class="navbar-brand" href="controller?command=listUsers"> 
+								<fmt:message key="header_jspf.anchor.users" />
+							</a>
+						</c:when>
+						<c:when test="${userRole.name == 'client' or empty userRole.name }">
+							<%-- <a class="navbar-brand" href="controller?command=listProducts">
+								<fmt:message key="header_jspf.anchor.home" />
+							</a> --%>
+							<a class="navbar-brand" href="controller?command=listProducts"> 
+								<fmt:message key="header_jspf.anchor.products" />
+							</a>
+						</c:when>
+					</c:choose>
+				</li>
+				
+				<li>
+					<a class="navbar-brand" href="controller?command=viewSettings"> 
+						<fmt:message key="header_jspf.anchor.settings" />
+					</a>
+				</li>
+			</ul>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<c:choose>
+					<c:when test="${userRole.name == 'admin' }">
+						<li>
+							<a class="navbar-brand">
+								<%-- <c:out value="${user.name}" /> 						
+								<c:out value="(${userRole.name})" /> --%>
+								${u:nameWithRole(user)}
+							</a>
+						</li>
+					</c:when>
+					<c:when test="${userRole.name == 'client' }">
+						<li>
+							<a href="controller?command=persanalAccount"> 
+								<fmt:message key="header_jspf.anchor.persanal_account" /> <br> 
+								<c:out value="${user.name}" /> 								
+								<%-- ${u:nameWithRole(user)}	 --%>		
+							</a>							
+						</li>
+						<li>
+							<a class="navbar-brand" href="cart.jsp"> 
+								<fmt:message key="header_jspf.anchor.cart" />
+							</a>
+						</li>
+					</c:when>
+					<c:when test="${empty userRole.name}">
+						<li>
+							<a href="controller?command=viewRegistration"> 
+								<fmt:message key="header_jspf.anonim" />
+							</a>
+						</li>
+						<li>
+							<a class="navbar-brand" href="cart.jsp"> 
+								<fmt:message key="header_jspf.anchor.cart" />
+							</a>							
+						</li>
+					</c:when>								
+				</c:choose>				
+				
+				<c:if test="${not empty user}">
+					<li>
+						<a class="navbar-brand" href="controller?command=logout"> 
+							<fmt:message key="header_jspf.anchor.logout" />
+						</a>
+					</li>
+				</c:if>
+				
+				<c:if test="${empty user and title ne 'Login'}">
+					<li>
+						<a class="navbar-brand" href="login.jsp"> 
+							<fmt:message key="header_jspf.anchor.login" />
+						</a>
+					</li>
+				</c:if>
+			</ul>
+		</div>
+	</div>
+</nav>
+

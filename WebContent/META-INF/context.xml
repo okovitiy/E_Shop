@@ -1,0 +1,14 @@
+<!-- Data source and connection pool configuration
+(The default Tomcat's DBCP is used)-->
+
+<Context>
+  <Resource name="jdbc/SMT4DB"
+  			auth="Container" 
+  			type="javax.sql.DataSource"
+			maxActive="100" maxIdle="30" maxWait="10000"
+			username="test" password="test" 
+			driverClassName="org.apache.derby.jdbc.ClientDriver"
+			defaultAutoCommit="false"
+			defaultTransactionIsolation="READ_COMMITTED"
+			url="jdbc:derby://localhost:1527/smt4db"/>			
+</Context>
